@@ -43,6 +43,7 @@ class SubmitButton extends StatelessWidget {
           network: () => 'Network error',
           unauthorized: () => 'Invalid password',
           unknown: () => 'Error',
+          notVerified: () => 'Email not verified',
         );
 
         ScaffoldMessenger.of(
