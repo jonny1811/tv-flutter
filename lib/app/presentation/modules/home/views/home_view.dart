@@ -40,13 +40,13 @@ class _HomeViewState extends State<HomeView> {
             ),
             TextButton(
               onPressed: () async {
+                await sessionController.signOut();
                 if (mounted) {
                   Navigator.pushReplacementNamed(
                     context, 
                     Routes.signIn,
                   );
                 }
-                await sessionController.signOut();
               },
               child: Text('Sign out'),
             ),

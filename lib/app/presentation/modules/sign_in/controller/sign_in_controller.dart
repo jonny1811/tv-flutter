@@ -1,5 +1,5 @@
 import '../../../../domain/either.dart';
-import '../../../../domain/enums.dart';
+import '../../../../domain/failures/sign_in/sign_in_failure.dart';
 import '../../../../domain/models/user/user.dart';
 import '../../../../domain/repositories/authentication_repository.dart';
 import '../../../global/state_notifier.dart';
@@ -37,8 +37,8 @@ class SignInController extends StateNotifier<SignInState> {
     );
 
     result.when(
-      (_) => state = state.copyWith(fetching: false), 
-      (_) => null,
+      left: (_) => state = state.copyWith(fetching: false), 
+      right: (_) => null,
     );
 
     return result;
