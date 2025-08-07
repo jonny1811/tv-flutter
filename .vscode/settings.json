@@ -8,6 +8,7 @@
     "command-runner.commands": {
         "pub get": "flutter pub get",
         "build_runner": "dart run build_runner build",
-        "build_runner delete conflicting": "dart run build_runner build --delete-conflicting-outputs"
+        "build_runner delete conflicting": "dart run build_runner build --delete-conflicting-outputs",
+        "flutter_gen": "dart run flutter_gen:flutter_gen_command"
     },
 }

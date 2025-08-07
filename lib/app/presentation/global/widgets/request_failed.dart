@@ -21,7 +21,7 @@ class RequestFailed extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-            child: Assets.images.error404.image(),
+            child: Assets.svgs.error404.svg(),
           ),
           Text(text ?? 'Request Failed'),
           const SizedBox(height: 10.0),
