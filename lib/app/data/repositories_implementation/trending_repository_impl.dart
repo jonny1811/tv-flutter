@@ -20,6 +20,6 @@ class TrendingRepositoryImpl implements TrendingRepository {
 
   @override
   Future<Either<HttpRequestFailure, List<Performer>>> getPerformers() {
-    return _trendingAPI.getPerformers(TimeWindow.day);
+    return _trendingAPI.getPerformers(1);
   }
 }

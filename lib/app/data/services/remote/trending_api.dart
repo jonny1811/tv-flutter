@@ -29,10 +29,10 @@ class TrendingAPI {
   }
 
   Future<Either<HttpRequestFailure, List<Performer>>> getPerformers(
-    TimeWindow timeWindow,
+    int page,
   ) async {
     final result = await _http.request(
-      '/trending/person/${timeWindow.name}',
+      '/person/popular?$page',
       onSuccess: (json) {
         final list = List<Json>.from(json['results']);
         return list

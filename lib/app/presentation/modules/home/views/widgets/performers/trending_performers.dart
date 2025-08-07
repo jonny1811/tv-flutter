@@ -23,10 +23,7 @@ class _TrendingPerformersState extends State<TrendingPerformers> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(
-      viewportFraction: 0.8,
-      initialPage: 1,
-    );
+    _pageController = PageController();
     _future = context.read<TrendingRepository>().getPerformers();
   }
 
@@ -48,25 +45,38 @@ class _TrendingPerformersState extends State<TrendingPerformers> {
 
           return snapshot.data!.when(
             left: (_) => const Text('Error'),
-            right: (list) => Column(
+            right: (list) => Stack(
+              alignment: Alignment.bottomCenter,
               children: [
-                Expanded(
-                  child: PageView.builder(
-                    controller: _pageController,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      final performer = list[index];
-                      return PerformerTile(performer: performer);
-                    },
-                  ),
+                PageView.builder(
+                  controller: _pageController,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    final performer = list[index];
+                    return PerformerTile(performer: performer);
+                  },
                 ),
-                AnimatedBuilder(
-                  animation: _pageController, 
-                  builder: (_, __) {
-                    final int currentCard = _pageController.page?.toInt() ?? 1;
-                    return Text('${currentCard + 1}/${list.length}');
-                  }
+                Positioned(
+                  bottom: 30.0,
+                  child: AnimatedBuilder(
+                    animation: _pageController, 
+                    builder: (_, __) {
+                      final int currentCard = _pageController.page?.toInt() ?? 0;
+                      return Row(
+                        children: List.generate(
+                          list.length, 
+                          (index) => Icon(
+                            Icons.circle,
+                            size: 14.0,
+                            color: currentCard == index 
+                              ? Colors.blue 
+                              : Colors.white30,
+                          ),
+                        ),
+                      );
+                    }
+                  ),
                 ),
                 const SizedBox(height: 10.0),
               ],
