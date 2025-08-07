@@ -6,6 +6,7 @@ import '../../../../../../domain/enums.dart';
 import '../../../../../../domain/failures/http_request/http_request_failure.dart';
 import '../../../../../../domain/models/media/media.dart';
 import '../../../../../../domain/repositories/trending_repository.dart';
+import '../../../../../global/widgets/request_failed.dart';
 import 'trending_tile.dart';
 import 'trending_time_window.dart';
 
@@ -21,12 +22,20 @@ class TrendingList extends StatefulWidget {
 class _TrendingListState extends State<TrendingList> {
   TrendingRepository get _repository => context.read();
   late Future<EitherListMedia> _future;
-  TimeWindow _timeWindow = TimeWindow.day;
+  final TimeWindow _timeWindow = TimeWindow.day;
 
   @override
   void initState() {
     super.initState();
     _future = _repository.getMoviesAndSeries(_timeWindow);
+  }
+
+  void _updateFuture(TimeWindow timeWindow) {
+    setState(() {
+      _future = _repository.getMoviesAndSeries(
+        timeWindow,
+      );
+    });
   }
 
   @override
@@ -36,14 +45,8 @@ class _TrendingListState extends State<TrendingList> {
       children: [
         TrendingTimeWindow(
           timeWindow: _timeWindow, 
-          onChanged: (timeWindow) {
-            setState(() {
-              _timeWindow = timeWindow;
-              _future = _repository.getMoviesAndSeries(
-                _timeWindow,
-              );
-            });
-          }),
+          onChanged: _updateFuture,
+        ),
         const SizedBox(height: 10),
         AspectRatio(
           aspectRatio: 16 / 8,
@@ -60,8 +63,10 @@ class _TrendingListState extends State<TrendingList> {
                     }
                     
                     return snapshot.data!.when(
-                      left: (failure) => Text(
-                        failure.toString(),
+                      left: (failure) => RequestFailed(
+                        onRetry: () {
+                          _updateFuture(_timeWindow);
+                        },
                       ),
                       right: (list) {
                         return ListView.separated(
