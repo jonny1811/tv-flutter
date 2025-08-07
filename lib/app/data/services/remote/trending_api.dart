@@ -18,7 +18,7 @@ class TrendingAPI {
     final result = await _http.request(
       '/trending/all/${timeWindow.name}',
       onSuccess: (json) {
-        final list = List<Json>.from(json['results']);
+        final list = List<Json>.from(json['results11']);
         return getMediaList(list);
       },
     );
@@ -34,7 +34,7 @@ class TrendingAPI {
     final result = await _http.request(
       '/person/popular?$page',
       onSuccess: (json) {
-        final list = List<Json>.from(json['results']);
+        final list = List<Json>.from(json['results11']);
         return list
           .where(
             (e) => 
