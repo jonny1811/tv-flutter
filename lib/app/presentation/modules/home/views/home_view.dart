@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/enums.dart';
 import '../controller/home_controller.dart';
 import '../controller/state/home_state.dart';
 import 'widgets/movies_and_series/trending_list.dart';
@@ -20,7 +19,7 @@ class _HomeViewState extends State<HomeView> {
     return ChangeNotifierProvider(
       create: (_) {
         final controller = HomeController(
-          HomeState.loading(TimeWindow.day),
+          HomeState(),
           trendingRepository: context.read(),
         );
 
@@ -30,9 +29,8 @@ class _HomeViewState extends State<HomeView> {
       child: Scaffold(
         body: SafeArea(
           child: LayoutBuilder(
-            builder: (_, constraints) => RefreshIndicator(
-              onRefresh: () async {
-              },
+            builder: (context, constraints) => RefreshIndicator(
+              onRefresh: context.read<HomeController>().init,
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: SizedBox(

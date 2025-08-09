@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../global/widgets/request_failed.dart';
 import '../../../controller/home_controller.dart';
+import '../../../controller/state/home_state.dart';
 import 'trending_tile.dart';
 import 'trending_time_window.dart';
 
@@ -12,14 +13,14 @@ class TrendingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = context.watch();
-    final state = controller.state;
+    final moviesAndSeries = controller.state.moviesAndSeries;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TrendingTimeWindow(
-          timeWindow: state.timeWindow,
-          onChanged: (timeWindow) {},
+          timeWindow: moviesAndSeries.timeWindow,
+          onChanged: controller.onTimeWindowChanged,
         ),
         const SizedBox(height: 10),
         AspectRatio(
@@ -28,9 +29,17 @@ class TrendingList extends StatelessWidget {
             builder: (_, constraints) {
               final width = constraints.maxHeight * 0.65;
               return Center(
-                child: state.when(
+                child: moviesAndSeries.when(
                   loading: (_) => const CircularProgressIndicator(), 
-                  failed: (_) => RequestFailed(onRetry: () {}), 
+                  failed: (_) => RequestFailed(
+                    onRetry: () {
+                      controller.loadMoviesAndSeries(
+                        moviesAndSeries: MoviesAndSeriesState.loading(
+                          moviesAndSeries.timeWindow,
+                        ),
+                      );
+                    },
+                  ), 
                   loaded: (_, list) => ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     scrollDirection: Axis.horizontal,
