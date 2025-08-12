@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'app/data/http/http.dart';
 import 'app/data/repositories_implementation/account_repository_impl.dart';
@@ -28,7 +29,10 @@ import 'app/presentation/global/controllers/session_controller.dart';
 Future main() async {
   await dotenv.load(fileName: '.env');
 
-  final sessionService = SessionService(const FlutterSecureStorage());
+  setPathUrlStrategy();
+  final sessionService = SessionService(
+    const FlutterSecureStorage(),
+  );
 
   final http = Http(
     client: Client(),

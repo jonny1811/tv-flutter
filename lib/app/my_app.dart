@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'generated/assets.gen.dart';
 import 'presentation/routes/app_routes.dart';
 import 'presentation/routes/routes.dart';
 
@@ -13,9 +14,24 @@ class MyApp extends StatelessWidget {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: MaterialApp(
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.blue,
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+          )
+        ),
         initialRoute: Routes.splash,
         debugShowCheckedModeBanner: false,
         routes: appRoutes,
+        onUnknownRoute: (_) => MaterialPageRoute(
+          builder: (_) => Scaffold(
+            body: Center(
+              child: Assets.svgs.error404.svg(),
+            ),
+          ),
+        ),
       ),
     );
   }

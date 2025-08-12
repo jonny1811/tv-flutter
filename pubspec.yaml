@@ -41,6 +41,7 @@ dependencies:
   freezed_annotation: 2.4.4
   extended_image: ^10.0.1
   flutter_svg: ^2.2.0
+  url_strategy: ^0.3.0
 
 dev_dependencies:
   flutter_test:
