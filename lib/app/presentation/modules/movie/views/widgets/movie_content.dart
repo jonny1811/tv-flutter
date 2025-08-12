@@ -15,17 +15,79 @@ class MovieContent extends StatelessWidget {
     return  SingleChildScrollView(
       child: Column(
         children: [
-          AspectRatio(
-            aspectRatio: 16 / 13,
-            child: ExtendedImage.network(
-              getImageUrl(
-                movie.backdropPath,
-                imageQuality: ImageQuality.original,
+          Stack(
+            children: [
+              AspectRatio(
+                aspectRatio: 16 / 13,
+                child: ExtendedImage.network(
+                  getImageUrl(
+                    movie.backdropPath,
+                    imageQuality: ImageQuality.original,
+                  ),
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-            ),
+              Positioned(
+                left: 0,
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black54,
+                        Colors.black,
+                      ],
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(15.0).copyWith(
+                    top: 25.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        movie.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Wrap(
+                        spacing: 10.0,
+                        children: movie.genres
+                          .map(
+                            (e) => Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              child: Text(
+                                e.name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
