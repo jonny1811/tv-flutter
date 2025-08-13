@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../controller/state/movie_state.dart';
+import 'movie_cast.dart';
 import 'movie_header.dart';
 
 class MovieContent extends StatelessWidget {
@@ -21,6 +22,7 @@ class MovieContent extends StatelessWidget {
               movie.overview,
             ),
           ),
+          MovieCast(movieId: movie.id),
         ],
       ),
     );
