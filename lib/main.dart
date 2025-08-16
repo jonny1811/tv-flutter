@@ -24,6 +24,8 @@ import 'app/domain/repositories/connectivity_repository.dart';
 import 'app/domain/repositories/movies_repository.dart';
 import 'app/domain/repositories/trending_repository.dart';
 import 'app/my_app.dart';
+import 'app/presentation/global/controllers/favorites/favorites_controller.dart';
+import 'app/presentation/global/controllers/favorites/state/favorites_state.dart';
 import 'app/presentation/global/controllers/session_controller.dart';
 
 Future main() async {
@@ -40,7 +42,7 @@ Future main() async {
     apiKey: dotenv.env['API_KEY_TMDB']!,
   );
 
-  final accountAPI = AccountAPI(http);
+  final accountAPI = AccountAPI(http, sessionService);
 
   runApp(
     MultiProvider(
@@ -72,6 +74,12 @@ Future main() async {
         ChangeNotifierProvider<SessionController>(
           create: (context) => SessionController(
             authenticationRepository: context.read(),
+          ),
+        ),
+        ChangeNotifierProvider<FavoritesController>(
+          create: (context) => FavoritesController(
+            FavoritesState.loading(),
+            accountRepository: context.read(),
           ),
         ),
       ],
