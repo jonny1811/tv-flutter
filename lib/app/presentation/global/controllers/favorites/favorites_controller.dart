@@ -7,8 +7,8 @@ import 'state/favorites_state.dart';
 class FavoritesController extends StateNotifier<FavoritesState> {
   FavoritesController(
     super.state, {
-      required this.accountRepository,
-    });
+    required this.accountRepository,
+  });
   final AccountRepository accountRepository;
 
   Future<void> init() async {
