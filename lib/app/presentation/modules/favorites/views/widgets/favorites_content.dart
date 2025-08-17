@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../global/controllers/favorites/state/favorites_state.dart';
+import 'favorites_list.dart';
 
 class FavoritesContent extends StatelessWidget {
   const FavoritesContent({
@@ -17,8 +18,12 @@ class FavoritesContent extends StatelessWidget {
     return TabBarView(
       controller: tabController,
       children: [
-        const Text('movies'),
-        const Text('series'),
+        FavoritesList(
+          items: state.movies.values.toList(),
+        ),
+        FavoritesList(
+          items: state.series.values.toList(),
+        ),
       ],
     );
   }

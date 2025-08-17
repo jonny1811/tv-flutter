@@ -14,15 +14,15 @@ class MovieHeader extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 16 / 13,
-          child: ExtendedImage.network(
+          child: movie.backdropPath != null ? ExtendedImage.network(
             getImageUrl(
-              movie.backdropPath,
+              movie.backdropPath!,
               imageQuality: ImageQuality.original,
             ),
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
-          ),
+          ) : const SizedBox(),
         ),
         Positioned(
           left: 0,
