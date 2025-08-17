@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../global/controllers/favorites/favorites_controller.dart';
+import '../../../../utils/mark_as_favorite.dart';
 import '../../controller/movie_controller.dart';
 
 class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -19,9 +20,14 @@ class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
           favoritesController.state.maybeMap(
             orElse: () => const SizedBox(),
             loaded: (favoritesState) => IconButton(
-              onPressed: () {}, 
+              onPressed: () => markAsFavorite(
+                context,
+                movieState.movie.toMedia(),
+              ),
               icon: Icon(
-                favoritesState.movies.containsKey(movieState.movie.id) ? Icons.favorite : Icons.favorite_outline,
+                favoritesState.movies.containsKey(movieState.movie.id)
+                    ? Icons.favorite
+                    : Icons.favorite_outline,
               ),
             ),
           ),
@@ -29,7 +35,7 @@ class MovieAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-  
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
