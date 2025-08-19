@@ -27,6 +27,7 @@ import 'app/my_app.dart';
 import 'app/presentation/global/controllers/favorites/favorites_controller.dart';
 import 'app/presentation/global/controllers/favorites/state/favorites_state.dart';
 import 'app/presentation/global/controllers/session_controller.dart';
+import 'app/presentation/global/controllers/theme_controller.dart';
 
 Future main() async {
   await dotenv.load(fileName: '.env');
@@ -70,6 +71,9 @@ Future main() async {
           create: (_) => MoviesRepositoryImpl(
             MoviesAPI(http),
           ),
+        ),
+        ChangeNotifierProvider<ThemeController>(
+          create: (_) => ThemeController(false),
         ),
         ChangeNotifierProvider<SessionController>(
           create: (context) => SessionController(
